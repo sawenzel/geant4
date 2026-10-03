@@ -417,6 +417,13 @@ G4double G4Transportation::AlongStepGetPhysicalInteractionLength(const G4Track& 
       fPreviousSafety = currentSafety;
       fpSafetyHelper->SetCurrentSafety(currentSafety, fTransportEndPosition);
 
+      // The propagator in field remembers only the navigator's safety from its
+      // last chord; offer it this one, so the next step can use it too.
+      if (fFieldPropagator->GetNavigatorForPropagating() == fLinearNavigator)
+      {
+        fFieldPropagator->UpdateSafety(fTransportEndPosition, endSafety);
+      }
+
       // Because the Stepping Manager assumes it is from the start point,
       //  add the StepLength
       //

@@ -224,6 +224,13 @@ class G4PropagatorInField
     inline G4bool GetUseSafetyForOptimization();
 
     /**
+     * Offers an isotropic safety computed by the caller at 'position', e.g.
+     * at the end point of a step. It replaces the remembered safety if it is
+     * larger there, so that the next chords inside it skip the navigator.
+     */
+    inline void UpdateSafety(const G4ThreeVector& position, G4double safety);
+
+    /**
      * Intersects the chord from StartPointA to EndPointB and returns
      * whether an intersection occurred.
      *   @note Safety is changed!

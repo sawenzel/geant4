@@ -280,6 +280,18 @@ inline G4bool G4PropagatorInField::GetUseSafetyForOptimization()
 
 // ------------------------------------------------------------------------
 //
+inline void G4PropagatorInField::UpdateSafety(const G4ThreeVector& position, G4double safety)
+{
+  const G4double MagShift = (position - fPreviousSftOrigin).mag();
+  if (fPreviousSafety - MagShift < safety)
+  {
+    fPreviousSftOrigin = position;
+    fPreviousSafety = safety;
+  }
+}
+
+// ------------------------------------------------------------------------
+//
 inline void G4PropagatorInField::SetNavigatorForPropagating(G4Navigator* SimpleOrMultiNavigator)
 {
   if (SimpleOrMultiNavigator != nullptr)
